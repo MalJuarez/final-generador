@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>API Google Gemini</title>
+    <style>
+        body {
+            background: linear-gradient(245deg, #ffffff, #65177c);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items:flex-start;
+            height: 200vh;
+            margin: 0;
+            width: 100%;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            position: relative; /* Para posicionar el icono de carga */
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: #23072c;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="file"] {
+            display: none; /* Ocultar el campo de archivo original */
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .custom-file-upload, button {
+            padding: 10px 20px;
+            background-color: #23072c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+            margin: 5px;
+        }
+
+        button:hover,
+        .custom-file-upload:hover {
+            background-color: #372d3a;
+        }
+
+        #fileName {
+            color: #372d3a;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        #responseText {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        p {
+            color: #372d3a;
+        }
+
+        /* Estilos para el icono de carga */
+        .loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none; /* Inicialmente oculto */
+        }
+
+        .loader svg {
+            width: 50px; /* Ajusta el tamaño del icono según sea necesario */
+            height: 50px;
+            animation: rotate 2s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>¡Subí tu archivo o pegá tu Texto y Generá tu resumen!</h1>
+        <p>Puedes modificar el prompt como quieras.</p>
+        <input type="text" id="inputText" value="Genera un resumen y 4 preguntas básicas de la siguiente información">
+        <div class="button-container">
+            <label for="fileInput" class="custom-file-upload">Seleccionar archivo</label>
+            <input type="file" id="fileInput" accept=".docx">
+            <button id="generateButton">Generar</button>
+        </div>
+        <p id="fileName"></p>
+        <p id="responseText"></p>
+        <div class="loader" id="loader">
+            <!-- Icono de carga animado -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: none;">
+                <circle cx="50" cy="50" fill="none" stroke="#23072c" stroke-width="8" r="35" stroke-dasharray="164.93361431346415 56.97787143782138">
+                    <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+                </circle>
+            </svg>
+        </div>
+    </div>
+
+    <script type="importmap">
+        {
+          "imports": {
+            "@google/generative-ai": "https://esm.run/@google/generative-ai",
+            "mammoth": "https://esm.run/mammoth"
+          }
+        }
+    </script>
+    <script type="module">
+        import { GoogleGenerativeAI } from "@google/generative-ai";
+        import * as mammoth from "mammoth";
+
+        const API_KEY = 'AIzaSyC0orTg-z3EPSj91Wtpf6bBIKAQTSjbuBg'; // Reemplaza 'YOUR_API_KEY' con tu clave de API real
+        const genAI = new GoogleGenerativeAI(API_KEY);
+        const loader = document.getElementById('loader');
+        const fileNameDisplay = document.getElementById('fileName');
+        const responseText = document.getElementById('responseText');
+
+        document.getElementById('fileInput').addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                fileNameDisplay.textContent = `Archivo seleccionado: ${file.name}`;
+            } else {
+                fileNameDisplay.textContent = '';
+            }
+        });
+
+        document.getElementById('generateButton').addEventListener('click', async () => {
+            const inputText = document.getElementById('inputText').value;
+            const fileInput = document.getElementById('fileInput');
+            const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest"});
+            const prompt = inputText;
+
+            let finalPrompt = prompt;
+
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                try {
+                    const arrayBuffer = await file.arrayBuffer();
+                    const result = await mammoth.extractRawText({ arrayBuffer });
+                    finalPrompt += "\n\n" + result.value;
+                } catch (error) {
+                    console.error('Error al leer el archivo:', error);
+                }
+            }
+
+            try {
+                // Limpiar el contenido anterior y mostrar el icono de carga
+                responseText.innerText = '';
+                loader.style.display = 'block';
+
+                const result = await model.generateContent(finalPrompt);
+                const response = await result.response;
+                responseText.innerText = response.text();
+
+                // Ocultar el icono de carga después de obtener la respuesta
+                loader.style.display = 'none';
+            } catch (error) {
+                console.error('Error al generar contenido:', error);
+                // Asegúrate de ocultar el icono de carga en caso de error también
+                loader.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

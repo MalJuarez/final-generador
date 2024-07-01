@@ -1,0 +1,221 @@
+/* styles.css */
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;800&display=swap");
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.card {
+    display: flex;
+    max-width: 90%;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.izquierda, .derecha {
+    flex: 1;
+    padding: 2rem;
+}
+
+.izquierda {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #f7f7f7;
+    flex: 0 0 40%; /* 40% del ancho */
+}
+
+.derecha {
+    display: flex;
+    flex-direction: column; /* Columna para que la imagen y el detalle se apilen verticalmente */
+    align-items: center;
+    justify-content: center;
+    background: url('/images/background.jpg') no-repeat center center/cover;
+    flex: 0 0 60%; /* 60% del ancho */
+    padding: 2rem;
+    position: relative; /* Para posicionar .detalle_vidrio correctamente */
+}
+
+.imagen_logo {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.titulo_login {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.subtitulo {
+    font-size: 1rem;
+    margin-bottom: 30px;
+    color: #666;
+}
+
+.caja_input {
+    margin-bottom: 20px;
+}
+
+.caja_input label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.caja_input input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.control_guardado {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.olvidaste_contraseña {
+    color: #007bff;
+    cursor: pointer;
+}
+
+.control_acceso {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.boton_login, .boton_registrar {
+    width: 48%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #fff;
+}
+
+.boton_login {
+    background: #007bff;
+}
+
+.boton_registrar {
+    background: #28a745;
+}
+
+.boton_registrar--texto {
+    color: #fff;
+}
+
+.separador {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.separador span {
+    flex: 1;
+    height: 1px;
+    background: #ccc;
+    margin: 0 10px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.control_login_social {
+    display: flex;
+    justify-content: space-between;
+}
+
+.boton_social {
+    display: flex;
+    align-items: center;
+    width: 48%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #333;
+}
+
+.boton_social img {
+    width: 16px;
+    margin-right: 10px;
+}
+
+.googlelogin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* Ajusta el margen según sea necesario */
+}
+
+.control_login_social {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.background_imagen {
+    width: 100%;
+    size: 70%;
+    height: auto;
+    margin-bottom: 10px; /* Añadir margen para separar de .detalle_vidrio */
+}
+
+.detalle_vidrio {
+    background: rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    width: 90%; /* Asegurar que ocupe todo el ancho de .derecha */
+}
+
+.detalle_vidrio-interno {
+    font-size: 1.2rem;
+    color: #3d0563;
+    text-align: center; /* Centrar el texto */
+}
+
+.izquierda .control_login_social img {
+    size: 40%;
+    height: 20px;
+    margin-right: 10px;
+}
+
+form label {
+    text-align: left;
+}
+
+.text-content {
+    padding: 5%;
+    border-radius: 10px;
+    background-color: #ffffffa9;
+}
+
+.text-content h2 {
+    color: #3d0563;
+}
+
+.slide-title {
+    color: #e6d8e6;
+    width: 100%;
+    text-align: center;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    .card {
+        flex-direction: column;
+    }
+    .izquierda, .derecha {
+        padding: 1rem;
+        flex: 1 1 100%; /* Hacer que ocupen el 100% del ancho en pantallas pequeñas */
+    }
+}

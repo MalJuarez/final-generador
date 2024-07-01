@@ -1,0 +1,89 @@
+.container {
+    text-align: center;
+    max-width: 600px;
+    padding: 5%;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    margin-left: 28%;
+    margin-top: 8%;
+    margin-bottom: 4%;
+}
+
+h1 {
+    color: #23072c;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.custom-file-upload, button {
+    padding: 10px 20px;
+    background-color: #23072c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+    margin: 5px;
+}
+
+button:hover,
+.custom-file-upload:hover {
+    background-color: #372d3a;
+}
+
+#fileName {
+    color: #372d3a;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+#responseText {
+    margin-top: 20px;
+    text-align: left;
+}
+
+p {
+    color: #372d3a;
+}
+
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.loader svg {
+    width: 50px;
+    height:50px;
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

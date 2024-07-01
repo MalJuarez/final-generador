@@ -1,0 +1,60 @@
+/* content.css */
+.content-container {
+    width: 90%;
+    margin: 5rem auto;
+    text-align: center;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image-content-container {
+    width: 90%;
+    margin: 2rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.content-image {
+    max-width: 100%; /* Ajuste para que la imagen ocupe como máximo el ancho del contenedor */
+    max-height: 300px; /* Ajuste para limitar la altura de la imagen */
+    margin-right: 1rem;
+    border-radius: 10px;
+}
+
+.text-content {
+    max-width: 100%;
+}
+
+.text-content h2 {
+    margin-bottom: 1rem;
+}
+
+.text-content p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #333;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    .content-container, .image-content-container {
+        padding: 1rem;
+    }
+    .image-content-container {
+        flex-direction: column;
+    }
+    .content-image {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+}
